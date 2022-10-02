@@ -1,0 +1,27 @@
+header {
+    display: flex;
+    padding: 30px 50px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    background-color: #2e2e2e;
+}
+
+.nav-bar {
+    font-size: 20px;
+}
+
+.nav-bar li {
+    display: inline;
+	margin: 0;
+	padding: 0 10px;
+}
+
+.navBar {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navBar:hover {
+    color: cyan;
+}
