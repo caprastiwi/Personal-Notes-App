@@ -1,4 +1,4 @@
-# Personal Notes App 2
+# Personal Notes App 1
 
 This project is a submission of Dicoding Academy course
 
