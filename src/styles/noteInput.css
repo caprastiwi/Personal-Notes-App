@@ -1,0 +1,40 @@
+.note-add {
+    padding: 0 50px;
+}
+
+.noteAdd-header {
+    display: flex;
+    margin-bottom: 20px;
+    font-size: 16px;
+    align-items: center;
+    color: snow;
+}
+
+.noteAdd-right {
+    width: 150px;
+}
+
+.noteAdd-header h2 {
+    padding-left: 5px;
+}
+
+.note-input input, textarea {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-radius: 10px;
+}
+
+.noteInput-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: snow;
+    background-color: #2e2e2e;
+}
+
+.noteInput-body {
+    min-height: 350px;
+    color: snow;
+    background-color: #2e2e2e;
+}
