@@ -1,0 +1,75 @@
+header {
+    display: flex;
+    padding: 30px 50px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    background-color: #2e2e2e;
+}
+
+.nav-bar {
+    font-size: 20px;
+}
+
+.nav-bar li {
+    display: inline;
+	margin: 0;
+	padding: 0 10px;
+}
+
+.navBar {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navBar:hover {
+    color: cyan;
+}
+
+.theme-btn,
+.profile-btn {
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
+
+footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #2e2e2e;
+}
+
+.footer-left,
+.footer-right {
+	padding: 50px;
+}
+
+.footer-left h1 {
+	font-family: 'Caladea';
+	font-style: italic;
+	text-transform: capitalize;
+}
+
+.footer-left p {
+	font-size: 18px;
+	font-family: 'Gabriola';
+}
+
+.footer-left span {
+	text-transform: uppercase;
+	color: cyan;
+}
+
+.footer-icon {
+	padding: 0 10px;
+}
+
+.social-icon {
+	font-size: 20px;
+	color: #fff;
+}
+
+.social-icon:hover {
+	color: cyan;
+}
