@@ -3,8 +3,12 @@ header {
     padding: 30px 50px;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid gray;
-    background-color: #2e2e2e;
+    border-bottom: 3px solid var(--contrast);
+    background-color: var(--primary);
+}
+
+.header-name {
+    color: var(--light);
 }
 
 .nav-bar {
@@ -18,12 +22,12 @@ header {
 }
 
 .navBar {
-    color: #fff;
+    color: var(--light);
     text-decoration: none;
 }
 
 .navBar:hover {
-    color: cyan;
+    color: var(--contrast);
 }
 
 .theme-btn,
@@ -34,42 +38,45 @@ header {
 }
 
 footer {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background-color: #2e2e2e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary);
 }
 
-.footer-left,
-.footer-right {
-	padding: 50px;
+.footer-left, .footer-right {
+    padding: 50px;
+}
+
+.footer-left {
+    color: var(--light);
 }
 
 .footer-left h1 {
-	font-family: 'Caladea';
-	font-style: italic;
-	text-transform: capitalize;
+    font-family: 'Caladea';
+    font-style: italic;
+    text-transform: capitalize;
 }
 
 .footer-left p {
-	font-size: 18px;
-	font-family: 'Gabriola';
+    font-size: 18px;
+    font-family: 'Gabriola';
 }
 
 .footer-left span {
-	text-transform: uppercase;
-	color: cyan;
+    text-transform: uppercase;
+    color: var(--contrast);
 }
 
 .footer-icon {
-	padding: 0 10px;
+    padding: 0 10px;
 }
 
 .social-icon {
-	font-size: 20px;
-	color: #fff;
+    font-size: 20px;
+    color: var(--light);
 }
 
 .social-icon:hover {
-	color: cyan;
+    color: var(--contrast);
 }

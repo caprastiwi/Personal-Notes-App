@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ArchivePage from './pages/ArchivePage';
@@ -12,90 +12,79 @@ import LoginPage from './pages/LoginPage';
 import { getUserLogged, putAccessToken } from './utils/api';
 import { ThemeProvider } from './contexts/ThemeContext';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            authedUser: null,
-            initializing: true,
-            themeContext: {
-                theme: localStorage.getItem('theme') || 'light',
-                toggleTheme: () => {
-                    this.setState((prevState) => {
-                        const newTheme = prevState.themeContext.theme === 'light' ? 'dark' : 'light';
-                        localStorage.setItem('theme', newTheme);
-                        return {
-                            themeContext: {
-                                ...prevState.themeContext,
-                                theme: newTheme
-                            }
-                        }
-                    });
-                }
-            }
-        };
+function App() {
+    const [authedUser, setAuthedUser] = useState(null);
+    const [initializing, setInitializing] = useState(true);
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-        this.onLoginSuccess = this.onLoginSuccess.bind(this);
-        this.onLogout = this.onLogout.bind(this);
-    }
-
-    async componentDidMount() {
-        const { data } = await getUserLogged();
-    
-        this.setState(() => {
-            return {
-                authedUser: data,
-                initializing: false,
-            };
-        });
-    }
-
-    async onLoginSuccess({ accessToken }) {
+    const onLoginSuccess = async ({ accessToken }) => {
         putAccessToken(accessToken);
         const { data } = await getUserLogged();
-        
-        this.setState(() => {
-            return {
-                authedUser: data,
-            };
-        });
+        setAuthedUser(data);
     }
 
-    onLogout() {
-        this.setState(() => {
-            return {
-                authedUser: null
-            }
-        });
-        
+    const onLogout = () => {
+        setAuthedUser(null);
         putAccessToken('');
     }
 
-    render() {
-        if (this.state.initializing) {
-            return null;
-        }
+    const toggleTheme = () => {
+        setTheme((prevTheme) => {
+            const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem("theme", newTheme);
+            return newTheme;
+        });
+    }
+    
+    const themeContextValue = useMemo(() => {
+        return {
+            theme,
+            toggleTheme,
+        };
+    }, [theme]);
 
-        if (this.state.authedUser === null) {
+    useEffect(() => {
+        if (theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [theme]);
+
+    useState(() => {
+        async function setUserLogged() {
+          const { data } = await getUserLogged();
+          setAuthedUser(data);
+          setInitializing(false);
+        };
+    
+        setUserLogged();
+      }, [setAuthedUser]);
+    
+      if (initializing) {
+        return null;
+      }
+
+        if (authedUser === null) {
             return (
+                <ThemeProvider value={themeContextValue}>
                 <>
                 <Header />
                 <main>
                     <Routes>
-                        <Route path="/*" element={<LoginPage loginSuccess={this.onLoginSuccess} />} />
+                        <Route path="/*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
                         <Route path="/register" element={<RegisterPage />} />
                     </Routes>
                 </main>
                 <Footer />
                 </>
+                </ThemeProvider>
             )
         }
 
         return (
-            <ThemeProvider value={this.state.themeContext}>
             <>
-            <Header logout={this.onLogout} name={this.state.authedUser.name} />
+            <Header logout={onLogout} name={authedUser.name} />
             <main>
                 <Routes>
                     <Route path='/' element={<HomePage />} />
@@ -107,9 +96,8 @@ class App extends React.Component {
             </main>
             <Footer />
             </>
-            </ThemeProvider>
         );
     }
-}
+
 
 export default App;

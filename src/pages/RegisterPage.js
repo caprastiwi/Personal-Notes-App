@@ -15,9 +15,9 @@ function RegisterPage() {
     
     return (
         <section className='register-page'>
-            <h2>Gak perlu serius-serius ya isinya ...</h2>
+            <h2>Daftar sekarang</h2>
             <RegisterInput register={onRegisterHandler} />
-            <p>Kembali ke <Link to="/">Masuk</Link></p>
+            <p>Kembali ke <Link to="/" className='link'>Masuk</Link></p>
         </section>
     )
 }

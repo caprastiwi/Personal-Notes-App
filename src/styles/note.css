@@ -1,0 +1,144 @@
+.note-add {
+    padding: 0 50px;
+}
+
+.noteAdd-header {
+    display: flex;
+    margin-bottom: 20px;
+    font-size: 16px;
+    align-items: center;
+    color: var(--primary);
+}
+
+.noteAdd-right {
+    width: 150px;
+}
+
+.noteAdd-header h2 {
+    padding-left: 5px;
+}
+
+.note-input input, textarea {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-radius: 10px;
+    border: 1px solid var(--primary);
+}
+
+.noteInput-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary);
+    background-color: var(--light);
+}
+
+.noteInput-body {
+    min-height: 350px;
+    color: var(--primary);
+    background-color: var(--light);
+}
+
+.home-page h2,
+.archive-page h2 {
+    font-size: 36px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    color: var(--primary);
+}
+
+.note-item {
+    width: 345px;
+    display: flex;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    background-color: var(--primary);
+    overflow: hidden;
+    flex-direction: column;
+    transition: 0.3s;
+}
+
+.note-item:hover {
+    border-color: var(--contrast);
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.noteItem-content {
+    padding: 20px 18px;
+    flex: 1;
+}
+
+.noteItem-title {
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.noteTitle {
+    color: var(--contrast);
+    text-decoration: none;
+}
+
+.noteItem-date {
+    color: var(--light);
+    border-bottom: 1px solid var(--light);
+    padding-bottom: 5px;
+}
+
+.noteItem-body {
+    padding: 10px 0 5px;
+    color: var(--light);
+}
+
+.noteItem-action {
+    text-align: center;
+    background-color: var(--light);
+    border: none;
+}
+
+.noteItem-btn {
+    width: 50%;
+    padding: 10px 0;
+    border: none;
+    background-color: var(--light);
+}
+
+.noteItem-btn.delete {
+    border-right: 1px solid var(--primary);
+}
+
+.noteItem-btn.delete:hover {
+    color: snow;
+    background-color: red;
+}
+
+.noteItem-btn.archive:hover {
+    color: snow;
+    background-color: darkorange;
+}
+
+.detailItem-content {
+    padding: 0 50px;
+    color: #fff;
+}
+
+.detailItem-title {
+    line-height: 32px;
+    font-size: 32px;
+    line-height: 36px;
+}
+
+.detailItem-date {
+    padding: 15px 0 10px;
+    font-size: 18px;
+    border-bottom: 1px solid #fff;
+}
+
+.detailItem-body {
+    padding: 15px 0;
+    font-size: 20px;
+    line-height: 28px;
+}

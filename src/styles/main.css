@@ -2,8 +2,17 @@
 	--primary: #2e2e2e;
 	--secondary: rgb(91, 91, 91);
 	--contrast: cyan;
+	--light: rgb(255, 255, 255);
 	--error: #e7002a;
 	--warning: #F39C12;
+	--action: green;
+	--background-color: rgb(255, 255, 255);
+	--font-color: #2e2e2e;
+}
+
+[data-theme='dark'] {
+	--font-color: #eee;
+	--background-color: #333;
 }
 
 * {
@@ -17,20 +26,12 @@
 }
 
 body {
-	color: #fff;
-	background-color: var(--secondary);
+	color: var(--font-color);
+	background-color: var(--background-color);
 }
 
 main {
     padding: 50px;
-}
-
-.home-page h2,
-.archive-page h2 {
-    font-size: 36px;
-    font-weight: bold;
-    padding-bottom: 20px;
-    color: white;
 }
 
 .note-list {
@@ -57,9 +58,9 @@ main {
     right: 50px;
     bottom: 50px;
     font-size: 20px;
-	color: cyan;
-	background-color: #2e2e2e;
-	border: 1px solid cyan;
+	color: var(--primary);
+	background-color: var(--contrast);
+	border: 1px solid var(--primary);
 	border-radius: 50px;
 	text-decoration: none;
     gap: 15px;
@@ -77,17 +78,17 @@ main {
 	display: flex;
     position: absolute;
 	font-size: 22px;
-	color: snow;
+	color: var(--primary);
 }
 
 .note-search input {
 	padding: 15px 25px 15px 55px;
 	width: 100%;
 	font-size: 20px;
-	border: 1px solid #fff;
+	border: 2px solid var(--primary);
 	border-radius: 50px;
-	color: snow;
-	background-color: #2e2e2e;
+	color: var(--primary);
+	background-color: var(--light);
 }
 
 .notFoundPage {
@@ -101,44 +102,4 @@ main {
 
 .notFoundPage p {
 	font-size: 28px;
-}
-
-/*----------Login----------*/
-.register-page,
-.login-page {
-	padding: 0 50px;
-}
-
-.login-page h2,
-.register-page h2 {
-	font-weight: normal;
-}
-
-.login-input,
-.register-input {
-	margin-top: 16px;
-}
-
-.login-input input,
-.register-input input {
-	display: block;
-	padding: 16px;
-	width: 100%;
-	margin: 8px 0;
-	font-size: 24px;
-	background-color: transparent;
-	border: 2px dashed black;
-	border-radius: 8px;
-}
-
-.login-input button,
-.register-input button {
-	display: block;
-	width: 100%;
-	padding: 16px;
-	font-size: 24px;
-	background-color: tan;
-	border: 2px dashed black;
-	border-radius: 8px;
-	margin: 16px 0;
 }

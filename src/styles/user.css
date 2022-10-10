@@ -1,0 +1,64 @@
+.register-page,
+.login-page {
+	padding: 0 50px;
+}
+
+.login-page h2,
+.register-page h2 {
+	font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.login-page p,
+.register-page p {
+	font-size: 18px;
+}
+
+.login-page .link,
+.register-page .link {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-page .link:hover,
+.register-page .link:hover {
+    color: var(--contrast);
+}
+
+.login-input,
+.register-input {
+	margin-top: 16px;
+}
+
+.login-input input,
+.register-input input {
+	display: block;
+	padding: 15px;
+	width: 100%;
+	margin: 10px 0;
+	font-size: 24px;
+	background-color: transparent;
+	border: 2px solid var(--primary);
+	border-radius: 8px;
+}
+
+.login-input button,
+.register-input button {
+	display: block;
+	width: 100%;
+	padding: 15px;
+	font-size: 24px;
+	color: var(--light);
+	background-color: var(--primary);
+	border: none;
+	border-radius: 8px;
+	margin: 20px 0 15px;
+}
+
+.login-page button:hover,
+.register-page button:hover {
+	color: var(--primary);
+	background-color: var(--contrast);
+}
