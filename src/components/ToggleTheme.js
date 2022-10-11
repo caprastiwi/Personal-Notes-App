@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeConsumer } from '../contexts/ThemeContext';
+import { ThemeConsumer } from '../contexts/LocaleContext';
 import { FaMoon, FaSun } from 'react-icons/fa';
  
 function ToggleTheme() {

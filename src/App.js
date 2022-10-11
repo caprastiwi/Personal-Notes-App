@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ArchivePage from './pages/ArchivePage';
@@ -10,81 +10,94 @@ import Footer from './components/Footer';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { getUserLogged, putAccessToken } from './utils/api';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { LocaleProvider } from './contexts/LocaleContext';
 
-function App() {
-    const [authedUser, setAuthedUser] = useState(null);
-    const [initializing, setInitializing] = useState(true);
-    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            authedUser: null,
+            initializing: true,
+            localeContext: {
+                locale: localStorage.getItem('locale') || 'id',
+                toggleLocale: () => {
+                    this.setState((prevState) => {
+                        const newLocale = prevState.localeContext.locale === 'id' ? 'en' : 'id';
+                        localStorage.setItem('locale', newLocale);
+                        return {
+                            localeContext: {
+                                ...prevState.localeContext,
+                                locale: newLocale
+                            }
+                        }
+                    });
+                }
+            }
+        };
 
-    const onLoginSuccess = async ({ accessToken }) => {
-        putAccessToken(accessToken);
-        const { data } = await getUserLogged();
-        setAuthedUser(data);
+        this.onLoginSuccess = this.onLoginSuccess.bind(this);
+        this.onLogout = this.onLogout.bind(this);
     }
 
-    const onLogout = () => {
-        setAuthedUser(null);
+    async componentDidMount() {
+        const { data } = await getUserLogged();
+    
+        this.setState(() => {
+            return {
+                authedUser: data,
+                initializing: false,
+            };
+        });
+    }
+
+    async onLoginSuccess({ accessToken }) {
+        putAccessToken(accessToken);
+        const { data } = await getUserLogged();
+        
+        this.setState(() => {
+            return {
+                authedUser: data,
+            };
+        });
+    }
+
+    onLogout() {
+        this.setState(() => {
+            return {
+                authedUser: null
+            }
+        });
+        
         putAccessToken('');
     }
 
-    const toggleTheme = () => {
-        setTheme((prevTheme) => {
-            const newTheme = prevTheme === 'light' ? 'dark' : 'light';
-            localStorage.setItem("theme", newTheme);
-            return newTheme;
-        });
-    }
-    
-    const themeContextValue = useMemo(() => {
-        return {
-            theme,
-            toggleTheme,
-        };
-    }, [theme]);
-
-    useEffect(() => {
-        if (theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
+    render() {
+        if (this.state.initializing) {
+            return null;
         }
-    }, [theme]);
 
-    useState(() => {
-        async function setUserLogged() {
-          const { data } = await getUserLogged();
-          setAuthedUser(data);
-          setInitializing(false);
-        };
-    
-        setUserLogged();
-      }, [setAuthedUser]);
-    
-      if (initializing) {
-        return null;
-      }
-
-        if (authedUser === null) {
+        if (this.state.authedUser === null) {
             return (
-                <ThemeProvider value={themeContextValue}>
+                <LocaleProvider value={this.state.localeContext}>
                 <>
                 <Header />
                 <main>
                     <Routes>
-                        <Route path="/*" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+                        <Route path="/*" element={<LoginPage loginSuccess={this.onLoginSuccess} />} />
                         <Route path="/register" element={<RegisterPage />} />
                     </Routes>
                 </main>
                 <Footer />
                 </>
-                </ThemeProvider>
+                </LocaleProvider>
             )
         }
 
         return (
+            <LocaleProvider value={this.state.localeContext}>
             <>
-            <Header logout={onLogout} name={authedUser.name} />
+            <Header logout={this.onLogout} name={this.state.authedUser.name} />
             <main>
                 <Routes>
                     <Route path='/' element={<HomePage />} />
@@ -96,8 +109,9 @@ function App() {
             </main>
             <Footer />
             </>
+            </LocaleProvider>
         );
     }
-
+}
 
 export default App;

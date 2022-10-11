@@ -1,65 +1,112 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { showFormattedDate } from '../utils/data';
 import { getActiveNotes, deleteNote, archiveNote } from '../utils/api';
 import NoteList from '../components/NoteList';
 import AddNoteBtn from '../components/AddNoteBtn';
 import SearchNote from '../components/SearchNote';
+import { LocaleConsumer } from '../contexts/LocaleContext';
 
-function HomePage() {
-  const [notes, setNotes] = useState([]);
-  const [initializing, setInitializing] = React.useState(true);
+function HomePageWrapper() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [keyword, setKeyword] = useState(() => {
-    return searchParams.get('keyword') || ''
-  });
 
-  const onDeleteHandler = async (id) => {
-    await deleteNote(id);
-  }
+  const keyword = searchParams.get('keyword');
 
-  const onArchiveHandler = async (id) => {
-    await archiveNote(id);
-  }
-
-  useEffect(() => {
-    async function setActiveNotes() {
-      const { error, data } = await getActiveNotes();
-      if (!error) {
-        setNotes(data);
-      }
-      setInitializing(false);
-    }
-
-    setActiveNotes();
-  }, [notes]);
-
-  if (initializing) {
-    return null;
-  }
-
-  function onKeywordChangeHandler(keyword) {
-    setKeyword(keyword);
+  function changeSearchParams(keyword) {
     setSearchParams({ keyword });
   }
 
-    return (
-      <div className='home-page'>
-        <SearchNote
-          keyword={keyword}
-          keywordChange={onKeywordChangeHandler}
-        />
-        <AddNoteBtn />
-        <h2>Active Notes</h2>
-        <NoteList
-          notes={notes}
-          onDelete={onDeleteHandler}
-          onArchive={onArchiveHandler}
-          createdAt={showFormattedDate}
-        />
-      </div>
-    )
-  
+  return <HomePage defaultKeyword={keyword} keywordChange={changeSearchParams} />
 }
 
-export default HomePage;
+class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      notes: [],
+      keyword: props.defaultKeyword || '',
+    }
+
+    this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    this.onArchiveHandler = this.onArchiveHandler.bind(this);
+    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+  }
+
+  async componentDidMount() {
+    const { data } = await getActiveNotes();
+    
+    this.setState(() => {
+      return {
+        notes: data,
+      }
+    })
+  }
+
+  async onDeleteHandler(id) {
+    await deleteNote(id);
+
+    const { data } = await getActiveNotes();
+    this.setState(() => {
+      return {
+        notes: data,
+      }
+    })
+  }
+
+  async onArchiveHandler(id) {
+    await archiveNote(id);
+    
+    const { data } = await getActiveNotes();
+    this.setState(() => {
+      return {
+        notes: data,
+      }
+    })
+  }
+
+  onKeywordChangeHandler(keyword) {
+    this.setState(() => {
+      return {
+        keyword,
+      }
+    });
+
+    this.props.keywordChange(keyword);
+  }
+
+  render() {
+    const notes = this.state.notes.filter((note) => {
+      return note.title.toLowerCase().includes(
+        this.state.keyword.toLowerCase()
+      );
+    });
+
+    return (
+      <LocaleConsumer>
+        {
+          ({ locale }) => {
+            return (
+              <div className='home-page'>
+                <SearchNote
+                  keyword={this.state.keyword}
+                  keywordChange={this.onKeywordChangeHandler}
+                />
+                <AddNoteBtn />
+                <h2>{locale === 'id' ? 'Catatan Aktif' : 'Active Notes'}</h2>
+                <NoteList
+                  notes={notes}
+                  onDelete={this.onDeleteHandler}
+                  onArchive={this.onArchiveHandler}
+                  createdAt={showFormattedDate}
+                />
+              </div>
+            )
+          }
+        }
+      </LocaleConsumer>
+    )
+  }
+}
+
+export default HomePageWrapper;
