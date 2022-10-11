@@ -7,7 +7,7 @@ function AddNoteBtn() {
     return (
         <LocaleConsumer>
             {
-                ({ locale, toggleLocale}) => {
+                ({ locale }) => {
                     return (
                         <>
                             <Link
