@@ -13,12 +13,21 @@ class DetailPage extends React.Component {
     super(props);
   
     this.state = {
-      detailNote: getNote(props.id)
+      detailNote: null,
     }
+  }
+
+  async componentDidMount() {
+    const note = await getNote(this.props.id);
+    this.setState(() => {
+      return {
+        detailNote: note.data,
+      };
+    });
   }
   
   render() {
-    if (this.state.detailNote === undefined) {
+    if (this.state.detailNote === null) {
       return <p>Note is not found!</p>;
     }
   
