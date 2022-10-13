@@ -12,7 +12,7 @@
 
 [data-theme='dark'] {
 	--font-color: #eee;
-	--background-color: #333;
+	--background-color: rgb(91, 91, 91);
 }
 
 * {

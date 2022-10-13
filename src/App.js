@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { getUserLogged, putAccessToken } from './utils/api';
 import { LocaleProvider } from './contexts/LocaleContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 class App extends React.Component {
     constructor(props) {
@@ -33,6 +34,21 @@ class App extends React.Component {
                         }
                     });
                 }
+            },
+            themeContext: {
+                theme: localStorage.getItem('theme') || 'light',
+                toggleTheme: () => {
+                    this.setState((prevState) => {
+                        const newTheme = prevState.themeContext.theme === 'light' ? 'dark' : 'light';
+                        localStorage.setItem('theme', newTheme);
+                        return {
+                            themeContext: {
+                                ...prevState.themeContext,
+                                theme: newTheme
+                            }
+                        }
+                    });
+                }
             }
         };
 
@@ -49,6 +65,8 @@ class App extends React.Component {
                 initializing: false,
             };
         });
+
+        document.documentElement.setAttribute('data-theme', this.state.themeContext.theme);
     }
 
     async onLoginSuccess({ accessToken }) {
@@ -80,35 +98,40 @@ class App extends React.Component {
         if (this.state.authedUser === null) {
             return (
                 <LocaleProvider value={this.state.localeContext}>
-                <>
-                <Header />
-                <main>
-                    <Routes>
-                        <Route path="/*" element={<LoginPage loginSuccess={this.onLoginSuccess} />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                    </Routes>
-                </main>
-                <Footer />
-                </>
+                <ThemeProvider value={this.state.themeContext}>
+                <div className='notes-app'>
+                    <Header />
+                    <main>
+                        <Routes>
+                            <Route path="/*" element={<LoginPage loginSuccess={this.onLoginSuccess} />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                        </Routes>
+                    </main>
+                    <Footer />
+                </div>
+            </ThemeProvider>
+
                 </LocaleProvider>
             )
         }
 
         return (
             <LocaleProvider value={this.state.localeContext}>
-            <>
-            <Header logout={this.onLogout} name={this.state.authedUser.name} />
-            <main>
-                <Routes>
-                    <Route path='/' element={<HomePage />} />
-                    <Route path='/archive' element={<ArchivePage />} />
-                    <Route path='/notes/new' element={<AddPage />} />
-                    <Route path='/notes/:id' element={<DetailPage />} />
-                    <Route path='*' element={<NotFoundPage />} />
-                </Routes>
-            </main>
-            <Footer />
-            </>
+                <ThemeProvider value={this.state.themeContext}>
+            <div className='notes-app'>
+                <Header logout={this.onLogout} name={this.state.authedUser.name} />
+                <main>
+                    <Routes>
+                        <Route path='/' element={<HomePage />} />
+                        <Route path='/archive' element={<ArchivePage />} />
+                        <Route path='/notes/new' element={<AddPage />} />
+                        <Route path='/notes/:id' element={<DetailPage />} />
+                        <Route path='*' element={<NotFoundPage />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+            </ThemeProvider>
             </LocaleProvider>
         );
     }
