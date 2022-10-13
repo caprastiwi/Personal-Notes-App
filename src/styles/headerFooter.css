@@ -31,11 +31,16 @@ header {
     color: var(--contrast);
 }
 
-.theme-btn,
+.toggle,
 .profile-btn {
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle {
+    width: 35px;
 }
 
 footer {

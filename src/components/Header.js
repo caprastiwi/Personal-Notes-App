@@ -23,9 +23,9 @@ function Header({ logout, name }) {
                                                 <ul>
                                                     <li><Link to='/' className='navBar'>{locale === 'id' ? 'Rumah' : 'Home'}</Link></li>
                                                     <li><Link to='/archive' className='navBar'>{locale === 'id' ? 'Arsip' : 'Archive'}</Link></li>
-                                                    <li><button onClick={toggleLocale}>{locale === 'id' ? 'en' : 'id'}</button></li>
-                                                    <li><button onClick={toggleTheme}>{theme === 'light' ? <FaMoon /> : <FaSun />}</button></li>
-                                                    <li><button className='profile-btn' onClick={logout}><FaSignOutAlt /> {name}</button></li>
+                                                    <li><button className='navBar toggle lang' onClick={toggleLocale}>{locale === 'id' ? 'EN' : 'ID'}</button></li>
+                                                    <li><button className='navBar toggle theme' onClick={toggleTheme}>{theme === 'light' ? <FaMoon /> : <FaSun />}</button></li>
+                                                    <li><button className='navBar profile-btn' onClick={logout}><FaSignOutAlt /> {name}</button></li>
                                                 </ul>
                                             </div>
                                         </header>

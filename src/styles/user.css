@@ -20,6 +20,7 @@
 .register-page .link {
     font-weight: bold;
     text-decoration: none;
+    color: var(--login);
 }
 
 .login-page .link:hover,
@@ -39,7 +40,8 @@
 	width: 100%;
 	margin: 10px 0;
 	font-size: 24px;
-	background-color: transparent;
+	color: var(--inputFont);
+	background-color: var(--inputBG);
 	border: 2px solid var(--primary);
 	border-radius: 8px;
 }
@@ -48,13 +50,14 @@
 .register-input button {
 	display: block;
 	width: 100%;
+	margin: 20px 0 15px;
 	padding: 15px;
 	font-size: 24px;
 	color: var(--light);
 	background-color: var(--primary);
 	border: none;
 	border-radius: 8px;
-	margin: 20px 0 15px;
+	cursor: pointer;
 }
 
 .login-page button:hover,

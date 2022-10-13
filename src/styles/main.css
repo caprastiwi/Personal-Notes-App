@@ -1,16 +1,26 @@
 :root {
 	--primary: #2e2e2e;
-	--secondary: rgb(91, 91, 91);
 	--contrast: cyan;
 	--light: rgb(255, 255, 255);
 	--error: #e7002a;
 	--warning: #F39C12;
-	--action: green;
-	--background-color: rgb(255, 255, 255);
+	--inputFont: #2e2e2e;
+	--inputBG: lightcyan;
+	--inputBorder: #2e2e2e;
+	--searchIcon: #2e2e2e;
+	--searchBG: snow;
+	--login: blue;
 	--font-color: #2e2e2e;
+	--background-color: rgb(255, 255, 255);
 }
 
 [data-theme='dark'] {
+	--inputFont: snow;
+	--inputBG: #2e2e2e;
+	--inputBorder: cyan;
+	--searchIcon: snow;
+	--searchBG: #2e2e2e;
+	--login: yellow;
 	--font-color: #eee;
 	--background-color: rgb(91, 91, 91);
 }
@@ -58,14 +68,21 @@ main {
     right: 50px;
     bottom: 50px;
     font-size: 20px;
-	color: var(--primary);
-	background-color: var(--contrast);
-	border: 1px solid var(--primary);
+	color: var(--inputFont);
+	background-color: var(--inputBG);
+	border: 1px solid var(--inputBorder);
 	border-radius: 50px;
 	text-decoration: none;
     gap: 15px;
 	cursor: pointer;
 	z-index: 10;
+}
+
+.noteInput-action:hover,
+.addBtn:hover {
+	color: var(--primary);
+	background-color: var(--contrast);
+	border-color: var(--light);
 }
 
 .note-search {
@@ -78,7 +95,7 @@ main {
 	display: flex;
     position: absolute;
 	font-size: 22px;
-	color: var(--primary);
+	color: var(--searchIcon);
 }
 
 .note-search input {
@@ -87,8 +104,8 @@ main {
 	font-size: 20px;
 	border: 2px solid var(--primary);
 	border-radius: 50px;
-	color: var(--primary);
-	background-color: var(--light);
+	color: var(--font-color);
+	background-color: var(--searchBG);
 }
 
 .notFoundPage {
